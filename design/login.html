@@ -29,8 +29,7 @@
 
 		<!-- Container start -->
 		<div class="container">
-
-			<form action="index.html">
+			<form id="login-form" action="#">
 				<div class="row justify-content-md-center">
 					<div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
 						<div class="login-screen">
@@ -40,10 +39,10 @@
 								</a>
 								<h5>Welcome back,<br />Please Login to your Account.</h5>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Email Address" />
+									<input type="text" id="login-email" class="form-control" placeholder="Email Address" required />
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control" placeholder="Password" />
+									<input type="password" id="login-password" class="form-control" placeholder="Password" required />
 								</div>
 								<div class="actions">
 									<a href="forgot-pwd.html">Recover password</a>
@@ -59,8 +58,47 @@
 					</div>
 				</div>
 			</form>
-
 		</div>
+		
+		<script>
+			document.getElementById('login-form').addEventListener('submit', function(event) {
+				event.preventDefault(); // Prevent the form from submitting via the browser
+		
+				const email = document.getElementById('login-email').value;
+				const password = document.getElementById('login-password').value;
+		
+				// Create payload
+				const payload = {
+					email: email,
+					password: password
+				};
+		
+				// Send data to backend using Fetch API
+				fetch('YOUR_LOGIN_BACKEND_API_ENDPOINT', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(payload)
+				})
+				.then(response => response.json())
+				.then(data => {
+					// Handle successful login
+					if (data.success) {
+						alert('Login successful!');
+						// Redirect or do something else after successful login
+					} else {
+						alert('Invalid email or password. Please try again.');
+					}
+				})
+				.catch(error => {
+					// Handle errors
+					console.error('Error:', error);
+					alert('Login failed. Please try again.');
+				});
+			});
+		</script>
+		
 		<!-- Container end -->
 
 	</body>
