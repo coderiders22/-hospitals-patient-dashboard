@@ -39,14 +39,14 @@
 								</a>
 								<h5>Welcome back,<br />Please Login to your Account.</h5>
 								<div class="form-group">
-									<input type="text" id="login-email" class="form-control" placeholder="Email Address" required />
+									<input type="text" id="username" class="form-control" placeholder="Email Address" required />
 								</div>
 								<div class="form-group">
-									<input type="password" id="login-password" class="form-control" placeholder="Password" required />
+									<input type="password" id="password" class="form-control" placeholder="Password" required />
 								</div>
 								<!-- Dropdown menu for user type -->
 								<div class="form-group">
-									<select id="user-type" class="form-control" required>
+									<select id="role" class="form-control" required>
 										<option value="" disabled selected>Select User Type</option>
 										<option value="doctor">Doctor</option>
 										<option value="patient">Patient</option>
@@ -71,20 +71,20 @@
 		<script>
 			document.getElementById('login-form').addEventListener('submit', function(event) {
 				event.preventDefault(); // Prevent the form from submitting via the browser
-		
-				const email = document.getElementById('login-email').value;
-				const password = document.getElementById('login-password').value;
-				const userType = document.getElementById('user-type').value;
-		
+			
+				const email = document.getElementById('username').value;
+				const password = document.getElementById('password').value;
+				const userType = document.getElementById('role').value;
+			
 				// Create payload
 				const payload = {
-					email: email,
+					username: username,
 					password: password,
-					userType: userType
+					role: role
 				};
-		
+			
 				// Send data to backend using Fetch API
-				fetch('YOUR_LOGIN_BACKEND_API_ENDPOINT', {
+				fetch('http://127.0.0.1', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
@@ -96,7 +96,14 @@
 					// Handle successful login
 					if (data.success) {
 						alert('Login successful!');
-						// Redirect or do something else after successful login
+			
+						// Redirect based on user type
+						if (userType === 'doctor') {
+							window.location.href = 'hospital-doctors-list.html';
+						} else if (userType === 'patient') {
+							window.location.href = 'hospital-patients.html';
+						}
+						
 					} else {
 						alert('Invalid email or password. Please try again.');
 					}
@@ -107,6 +114,7 @@
 					alert('Login failed. Please try again.');
 				});
 			});
+			
 		</script>
 		
 		<!-- Container end -->
