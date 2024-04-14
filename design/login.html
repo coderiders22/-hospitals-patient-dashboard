@@ -71,20 +71,20 @@
 		<script>
 			document.getElementById('login-form').addEventListener('submit', function(event) {
 				event.preventDefault(); // Prevent the form from submitting via the browser
-			
-				const email = document.getElementById('username').value;
-				const password = document.getElementById('password').value;
-				const userType = document.getElementById('role').value;
-			
+		
+				const email = document.getElementById('login-email').value; // Changed to 'login-email'
+				const password = document.getElementById('login-password').value; // Changed to 'login-password'
+				const userType = document.getElementById('user-type').value; // Changed to 'user-type'
+		
 				// Create payload
 				const payload = {
-					username: username,
+					username: email, // Changed 'username' to 'email'
 					password: password,
-					role: role
+					role: userType // Changed 'role' to 'userType'
 				};
-			
+		
 				// Send data to backend using Fetch API
-				fetch('http://127.0.0.1', {
+				fetch('http://127.0.0.1', {  // Replace 'http://127.0.0.1' with your backend API endpoint
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
@@ -96,7 +96,7 @@
 					// Handle successful login
 					if (data.success) {
 						alert('Login successful!');
-			
+		
 						// Redirect based on user type
 						if (userType === 'doctor') {
 							window.location.href = 'hospital-doctors-list.html';
@@ -114,8 +114,8 @@
 					alert('Login failed. Please try again.');
 				});
 			});
-			
 		</script>
+		
 		
 		<!-- Container end -->
 
