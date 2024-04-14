@@ -44,6 +44,14 @@
 								<div class="form-group">
 									<input type="password" id="login-password" class="form-control" placeholder="Password" required />
 								</div>
+								<!-- Dropdown menu for user type -->
+								<div class="form-group">
+									<select id="user-type" class="form-control" required>
+										<option value="" disabled selected>Select User Type</option>
+										<option value="doctor">Doctor</option>
+										<option value="patient">Patient</option>
+									</select>
+								</div>
 								<div class="actions">
 									<a href="forgot-pwd.html">Recover password</a>
 									<button type="submit" class="btn btn-info">Login</button>
@@ -66,11 +74,13 @@
 		
 				const email = document.getElementById('login-email').value;
 				const password = document.getElementById('login-password').value;
+				const userType = document.getElementById('user-type').value;
 		
 				// Create payload
 				const payload = {
 					email: email,
-					password: password
+					password: password,
+					userType: userType
 				};
 		
 				// Send data to backend using Fetch API
