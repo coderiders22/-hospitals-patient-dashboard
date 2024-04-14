@@ -30,8 +30,7 @@
 
 		<!-- Container start -->
 		<div class="container">
-
-			<form action="index.html">
+			<form id="signup-form" action="#">
 				<div class="row justify-content-md-center">
 					<div class="col-xl-5 col-md-6 col-sm-12">
 						<div class="login-screen">
@@ -41,12 +40,12 @@
 								</a>
 								<h5>Welcome,<br />Create your Admin Account.</h5>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Email Address" />
+									<input type="text" id="email" class="form-control" placeholder="Email Address" required />
 								</div>
 								<div class="form-group">
 									<div class="input-group">
-										<input type="password" class="form-control" placeholder="Password" />
-										<input type="password" class="form-control" placeholder="Conform">
+										<input type="password" id="password" class="form-control" placeholder="Password" required />
+										<input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
 									</div>
 									<small id="passwordHelpInline" class="text-muted">
 										Password must be 8-20 characters long.
@@ -65,8 +64,50 @@
 					</div>
 				</div>
 			</form>
-
 		</div>
+		
+		<script>
+			document.getElementById('signup-form').addEventListener('submit', function(event) {
+				event.preventDefault(); // Prevent the form from submitting via the browser
+		
+				const email = document.getElementById('email').value;
+				const password = document.getElementById('password').value;
+				const confirmPassword = document.getElementById('confirmPassword').value;
+		
+				// Check if passwords match
+				if (password !== confirmPassword) {
+					alert('Passwords do not match');
+					return;
+				}
+		
+				// Create payload
+				const payload = {
+					email: email,
+					password: password
+				};
+		
+				// Send data to backend using Fetch API
+				fetch('YOUR_BACKEND_API_ENDPOINT', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(payload)
+				})
+				.then(response => response.json())
+				.then(data => {
+					// Handle successful signup
+					alert('Signup successful!');
+					// Redirect or do something else
+				})
+				.catch(error => {
+					// Handle errors
+					console.error('Error:', error);
+					alert('Signup failed. Please try again.');
+				});
+			});
+		</script>
+		
 		<!-- Container end -->
 
 	</body>
